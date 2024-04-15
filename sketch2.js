@@ -3,6 +3,7 @@ let slice;
 let angle;
 let angleV;
 let angleA;
+let angleTemp;
 let counter = 2;
 let prevAng = 0;
 let notCounted = true;
@@ -15,6 +16,8 @@ let newCurrMin;
 let minCounter = 0;
 let minCountOn = true;
 
+let currPressed = false;
+
 function setup(){
     createCanvas(800, 800);
     angleMode(DEGREES);
@@ -23,6 +26,8 @@ function setup(){
     angle = 0;
     angleV = 0;
     angleA = 0;
+    angleTemp = 0.01;
+
     
     
 }
@@ -31,6 +36,7 @@ function setup(){
 
 function mousePressed() {
     // angle = 360+ createVector(mouseX-200, mouseY-200).heading();
+    currPressed = true;
     holdA = angle + 360;  
     angleV = 0;
   }
@@ -41,12 +47,18 @@ function mousePressed() {
   function mouseReleased() {
     let newAngle = 360+ createVector(mouseX- width/2, mouseY- height/2).heading();
     angleV = -1*(newAngle-holdA) * 0.01;
+    currPressed = false;
     
   }
-
   
 
 function draw(){
+
+    if (second() % 2 == 0){
+        angleA = angleTemp;
+    }
+
+
     angleV = constrain(angleV, 0,30);
     currTime = second();
     newCurrTime = (currTime + counter) % 60;
@@ -64,7 +76,7 @@ function draw(){
     }
 
 
-    background(50);
+    background(0);
     
     translate(width/2, height/2);
     strokeWeight(5);
@@ -72,6 +84,8 @@ function draw(){
 
     textAlign(RIGHT);
     textSize(50);
+    noStroke();
+    fill(255);
     text(newCurrMin,-350 + 20, 385);
     text(newCurrTime, -270 + 20, 385);
     text(':', -312, 383);
@@ -107,7 +121,8 @@ function draw(){
     angleV *= 0.98;
 
     let currAng = floor(angle % 360) - (slice * 0.5);
-    console.log(angleV);
+    console.log(counter);
+    console.log('this is angleV:', angleV);
     console.log('this is currAng:', currAng);
     console.log('this is prevAng:', prevAng);
 
@@ -152,6 +167,7 @@ function draw(){
     
 
     strokeWeight(4);
+    textAlign(CENTER);
     text(counter % 12 + 1, 0, 0);
     // text(currAng, 400,730);
     // text(prevAng, 400,760);
