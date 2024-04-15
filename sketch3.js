@@ -1,10 +1,11 @@
-let nSlice = 6;
+let nSlice = 30;
+let sliceAng = 180 / nSlice;
 let slice;
 let angle;
 let angleV;
 let angleA;
 let angleTemp;
-let counter = 2;
+let counter = 15;
 let prevAng = 0;
 let notCounted = true;
 
@@ -18,7 +19,10 @@ let minCountOn = true;
 
 let currPressed = false;
 
-function setup() {
+let currTimeNeedleRotateOffset = 0;
+
+
+function setup(){
     createCanvas(800, 800);
     angleMode(DEGREES);
     // frameRate(50);
@@ -26,10 +30,10 @@ function setup() {
     angle = 0;
     angleV = 0;
     angleA = 0;
-    angleTemp = 0.01;
-
-
-
+    angleTemp = 0.01 / 5;
+    
+    
+    
 }
 
 
@@ -37,61 +41,57 @@ function setup() {
 function mousePressed() {
     // angle = 360+ createVector(mouseX-200, mouseY-200).heading();
     currPressed = true;
-    holdA = angle + 360;
+    holdA = angle + 360;  
     angleV = 0;
-}
-function mouseDragged() {
-    angle = 360 + createVector(mouseX - width / 2, mouseY - height / 2).heading();
-}
-
-function mouseReleased() {
-    let newAngle = 360 + createVector(mouseX - width / 2, mouseY - height / 2).heading();
-    angleV = -1 * (newAngle - holdA) * 0.01;
+  }
+  function mouseDragged() {
+    angle = 360 + createVector(mouseX- width/2, mouseY- height/2).heading();
+  }
+  
+  function mouseReleased() {
+    let newAngle = 360+ createVector(mouseX- width/2, mouseY- height/2).heading();
+    angleV = -1*(newAngle-holdA) * 0.01;
     currPressed = false;
+    
+  }
+  
 
-}
+function draw(){
 
-function keyPressed() {
-    if (key == 'r') {
-        angleA = 1;
-    }
-}
-
-function draw() {
-
-    if (second() % 2 == 0) {
+    if (second() % 2 == 0){
         angleA = angleTemp;
     }
 
 
-    angleV = constrain(angleV, 0, 30);
+    angleV = constrain(angleV, 0,5);
     currTime = second();
     newCurrTime = (currTime + counter) % 60;
     currMin = minute();
     newCurrMin = (currMin + minCounter) % 60;
 
-
-    if (newCurrTime == 0 && minCountOn) {
+    
+    if (newCurrTime == 0 && minCountOn){
         minCounter += 1;
         minCountOn = false;
     }
 
-    else if (newCurrTime > 30) {
+    else if (newCurrTime > 30){
         minCountOn = true;
     }
 
 
     background(0);
-
-    translate(width / 2, height / 2);
+    
+    translate(width/2, height/2);
     strokeWeight(10);
+    rotate(currTimeNeedleRotateOffset);
 
 
     textAlign(RIGHT);
     textSize(50);
     noStroke();
     fill(255);
-    text(newCurrMin, -350 + 20, 385);
+    text(newCurrMin,-350 + 20, 385);
     text(newCurrTime, -270 + 20, 385);
     text(':', -312, 383);
 
@@ -107,25 +107,20 @@ function draw() {
             fill('red');
         }
 
-        arc(0, 0, width - 100, height - 100, a, a + slice, PIE)
+        arc(0,0, width - 100, height - 100, a, a + slice, PIE)
 
     }
-
+    
 
 
     fill(0);
-    ellipse(0, 0, 550);
-
-
-
-
-
+    ellipse(0,0, 550);
 
 
     stroke(255);
 
     rotate(angle);
-    ellipse(200, 0, 30);
+    // ellipse(200,0,30);
 
 
     angle += angleV;
@@ -140,29 +135,29 @@ function draw() {
     console.log('this is prevAng:', prevAng);
 
 
+    
 
-
-    if (angleV >= 8) {
-        if (currAng % 30 < 30 - 1) {
+    if (angleV >= 8){
+        if( currAng % sliceAng < sliceAng - 1){
             notCounted = true;
         }
         else {
             notCounted = false;
         }
     }
-    else {
+    else{
 
         notCounted = true;
     }
 
-    if (currAng >= prevAng && currAng <= prevAng + slice && notCounted) {
+    if (currAng >= prevAng && currAng <= prevAng + slice && notCounted){
         counter += 1;
-        prevAng = (prevAng + 30) % 360;
-        if (inMotion) {
+        prevAng = (prevAng + sliceAng) % 360;
+        if (inMotion){
             currTime += 1; // NOT WORKING
         }
     }
-
+    
 
 
 
@@ -170,22 +165,23 @@ function draw() {
 
     ////////////////////////////////////////////////////////////////////////
 
-    if (angleV <= 0.05) {
+    if (angleV <= 0.05 ) {
         inMotion = false;
     }
     else {
         inMotion = true;
     }
 
-
+    
 
     noStroke();
     textAlign(CENTER);
     fill(255);
-    text(counter % 12 + 1, 310, 0);
+    textSize(30);
+    text(counter % 60, 310, 0);
     // text(currAng, 400,730);
     // text(prevAng, 400,760);
 
-
+    
 
 }
