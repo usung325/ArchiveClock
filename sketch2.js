@@ -30,8 +30,8 @@ function mousePressed() {
   }
   
   function mouseReleased() {
-    // let newAngle = 360+ createVector(mouseX-200, mouseY-200).heading();
-    angleV = -1*(angle-holdA) * 0.05;
+    let newAngle = 360+ createVector(mouseX- width/2, mouseY- height/2).heading();
+    angleV = -1*(newAngle-holdA) * 0.05;
   }
 
   
