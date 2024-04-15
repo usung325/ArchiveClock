@@ -18,6 +18,8 @@ let minCountOn = true;
 
 let currPressed = false;
 
+let timeTraveling = false;
+
 function setup() {
     createCanvas(800, 800);
     angleMode(DEGREES);
@@ -53,7 +55,16 @@ function mouseReleased() {
 
 function keyPressed() {
     if (key == 'r') {
-        angleA = 1;
+        angleA = 2;
+        timeTraveling = true;
+    }
+
+    if (key == 'l') {
+        timeTraveling = false;
+    }
+
+    if (key == 'k') {
+        
     }
 }
 
@@ -131,7 +142,7 @@ function draw() {
     angle += angleV;
     angleV += angleA;
 
-    angleV *= 0.98;
+    
 
     let currAng = floor(angle % (360)) - (slice * 0.5);
     console.log(counter);
@@ -185,6 +196,10 @@ function draw() {
     text(counter % 12 + 1, 310, 0);
     // text(currAng, 400,730);
     // text(prevAng, 400,760);
+
+    if (!timeTraveling){
+        angleV *= 0.98;
+    }
 
 
 
