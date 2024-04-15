@@ -11,6 +11,9 @@ let currTime;
 let inMotion = false;
 let newCurrTime;
 let currMin = 0;
+let newCurrMin;
+let minCounter = 0;
+let minCountOn = true;
 
 function setup(){
     createCanvas(800, 800);
@@ -44,18 +47,34 @@ function mousePressed() {
   
 
 function draw(){
+    angleV = constrain(angleV, 0,30);
     currTime = second();
     newCurrTime = (currTime + counter) % 60;
-
-
     currMin = minute();
+    newCurrMin = (currMin + minCounter) % 60;
+
+    
+    if (newCurrTime == 0 && minCountOn){
+        minCounter += 1;
+        minCountOn = false;
+    }
+
+    else if (newCurrTime > 30){
+        minCountOn = true;
+    }
+
 
     background(50);
     
     translate(width/2, height/2);
     strokeWeight(5);
-    text(currMin,-50, 385);
-    text(newCurrTime, 0, 385);
+
+
+    textAlign(RIGHT);
+    textSize(50);
+    text(newCurrMin,-350 + 20, 385);
+    text(newCurrTime, -270 + 20, 385);
+    text(':', -312, 383);
 
     stroke(255);
 
@@ -88,7 +107,7 @@ function draw(){
     angleV *= 0.98;
 
     let currAng = floor(angle % 360) - (slice * 0.5);
-    console.log(counter);
+    console.log(angleV);
     console.log('this is currAng:', currAng);
     console.log('this is prevAng:', prevAng);
 
