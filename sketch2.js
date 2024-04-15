@@ -7,6 +7,11 @@ let counter = 2;
 let prevAng = 0;
 let notCounted = true;
 
+let currTime;
+let inMotion = false;
+let newCurrTime;
+let currMin = 0;
+
 function setup(){
     createCanvas(800, 800);
     angleMode(DEGREES);
@@ -15,6 +20,7 @@ function setup(){
     angle = 0;
     angleV = 0;
     angleA = 0;
+    
     
 }
 
@@ -31,16 +37,25 @@ function mousePressed() {
   
   function mouseReleased() {
     let newAngle = 360+ createVector(mouseX- width/2, mouseY- height/2).heading();
-    angleV = -1*(newAngle-holdA) * 0.05;
+    angleV = -1*(newAngle-holdA) * 0.01;
+    
   }
 
   
 
 function draw(){
-    background(50);
+    currTime = second();
+    newCurrTime = (currTime + counter) % 60;
 
+
+    currMin = minute();
+
+    background(50);
+    
     translate(width/2, height/2);
     strokeWeight(5);
+    text(currMin,-50, 385);
+    text(newCurrTime, 0, 385);
 
     stroke(255);
 
@@ -96,12 +111,32 @@ function draw(){
     if (currAng >= prevAng && currAng <= prevAng + slice && notCounted){
         counter += 1;
         prevAng = (prevAng + 30) % 360;
+        if (inMotion){
+            currTime += 1; // NOT WORKING
+        }
     }
+    
+
+
+
+
+
+    ////////////////////////////////////////////////////////////////////////
+
+    if (angleV <= 0.05 ) {
+        inMotion = false;
+    }
+    else {
+        inMotion = true;
+    }
+
+    
 
     strokeWeight(4);
     text(counter % 12 + 1, 0, 0);
     // text(currAng, 400,730);
     // text(prevAng, 400,760);
+
     
 
 }
