@@ -79,7 +79,7 @@ function draw(){
     background(0);
     
     translate(width/2, height/2);
-    strokeWeight(5);
+    strokeWeight(10);
 
 
     textAlign(RIGHT);
@@ -90,13 +90,13 @@ function draw(){
     text(newCurrTime, -270 + 20, 385);
     text(':', -312, 383);
 
-    stroke(255);
+    stroke(0);
 
-    for (a = 0 - (slice * 0.5); a < 360; a += slice) {
+    for (a = 0 - (slice * 0.5); a < 360 - (slice * 0.5); a += slice) {
 
-        let ang = angle % 360;
+        let ang = angle % (360);
 
-        fill(0);
+        fill(255);
 
         if (ang >= a && ang <= a + slice) {
             fill('red');
@@ -105,11 +105,19 @@ function draw(){
         arc(0,0, width - 100, height - 100, a, a + slice, PIE)
 
     }
+    
 
 
     fill(0);
     ellipse(0,0, 550);
     
+
+
+
+
+
+
+    stroke(255);
 
     rotate(angle);
     ellipse(200,0,30);
@@ -120,7 +128,7 @@ function draw(){
 
     angleV *= 0.98;
 
-    let currAng = floor(angle % 360) - (slice * 0.5);
+    let currAng = floor(angle % (360)) - (slice * 0.5);
     console.log(counter);
     console.log('this is angleV:', angleV);
     console.log('this is currAng:', currAng);
@@ -166,9 +174,10 @@ function draw(){
 
     
 
-    strokeWeight(4);
+    noStroke();
     textAlign(CENTER);
-    text(counter % 12 + 1, 0, 0);
+    fill(255);
+    text(counter % 12 + 1, 310, 0);
     // text(currAng, 400,730);
     // text(prevAng, 400,760);
 
