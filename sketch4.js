@@ -96,7 +96,7 @@ function draw() {
     background(0);
 
     translate(width / 2, height / 2);
-    strokeWeight(10);
+    strokeWeight(20);
 
 
     textAlign(RIGHT);
@@ -126,7 +126,9 @@ function draw() {
 
 
     fill(0);
-    ellipse(0, 0, 550);
+
+    strokeWeight(10);
+    ellipse(0, 0, 660);
 
 
 
