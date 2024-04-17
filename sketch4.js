@@ -1,22 +1,24 @@
-let nSlice = 6;
-let slice;
-let angle;
-let angleV;
-let angleA;
-let angleTemp;
-let counter = 2;
-let prevAng = 0;
-let notCounted = true;
+// working second interval for a 12 face clock
 
-let currTime;
-let inMotion = false;
-let newCurrTime;
+let nSlice = 6; //
+let slice; //
+let angle; //
+let angleV; //
+let angleA; //
+let angleTemp; // x
+let counter = 2; //
+let prevAng = 0; //
+let notCounted = true; //
+
+let currTime; //
+let inMotion = false; //
+let newCurrTime; //
 let currMin = 0;
 let newCurrMin;
 let minCounter = 0;
 let minCountOn = true;
 
-let currPressed = false;
+let currPressed = false; // outside class
 
 let timeTraveling = false;
 
@@ -128,7 +130,7 @@ function draw() {
     fill(0);
 
     strokeWeight(10);
-    ellipse(0, 0, 660);
+    ellipse(0, 0, 560);
 
 
 

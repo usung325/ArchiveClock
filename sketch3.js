@@ -1,3 +1,5 @@
+// 60 second clock
+
 let nSlice = 30;
 let sliceAng = 180 / nSlice;
 let slice;
