@@ -8,7 +8,7 @@ function setup() {
     background(0);
 
 
-    clock1 = new Clock(6, 400, 400);
+    clock1 = new Clock(30, 400, 400);
     clock1.initTime(second(), minute(), hour());
 }
 

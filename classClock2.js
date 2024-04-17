@@ -11,13 +11,17 @@ class Clock {
         this.minCounter = 0;
         this.hrCounter = 0;
 
+        this.initHr = 0;
+        this.initMin = 0;
+        this.initSec = 0;
+
         this.slice = floor(180 / n);
-        this.angle = 0;
-        this.angleV = 0;
+        this.angle = 0 - (this.slice * (n/2));
+        this.angleV = 0.1;
         this.angleA = 0;
 
         this.currAng = 0;
-        this.prevAng = 0 + (this.slice * 0.5);
+        this.prevAng = this.angle + (this.slice * 0.5);
 
         this.notCounted = true;
 
@@ -40,9 +44,17 @@ class Clock {
     }
 
     initTime(initSec, initMin, initHr){
+
+        this.initSec = initSec;
+        this.initMin = initMin;
+        this.initHr = initHr;
+
         this.currTime = initSec + this.counter;
         this.currMin = initMin + this.minCounter;
         this.currHr = initHr + this.hrCounter;
+
+        this.angle = this.angle+ ((this.slice * 0.5) * (this.initSec * 2));
+        this.prevAng = this.angle + (this.slice * 0.5);
         
     }
 
@@ -71,11 +83,12 @@ class Clock {
         this.angle += this.angleV;
         this.angleV += this.angleA;
 
+        this.angle %= 360;
 
 
         //// //// //// DEBUGGING //// //// //// //// //// 
 
-        // console.log(this.angle);
+        console.log(this.angle);
         // console.log('this is angleV:', this.angleV);
         console.log('this is this.counter:' + this.counter);
 
