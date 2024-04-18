@@ -38,6 +38,7 @@ function keyPressed() {
     if (key == 'r') {
         masterClock.angleA = 1;
         masterClock.timeTraveling = true;
+        
     }
     
     if (key == 'l') {
@@ -48,7 +49,6 @@ function keyPressed() {
 function draw() {
     background(0);
 
-
     stroke(1);
     masterClock.setNeedleSpeed(second());
 
@@ -57,16 +57,18 @@ function draw() {
     minuteClock.clockDraw(masterClock.angle);
     strokeWeight(25);
     masterClock.clockDraw();
-
-
+    
+    
     noStroke();
     masterClock.clockShow(second(), minute()); // temporary, would be clockSec.currSec and clockMin.currMin as parameters in future
     masterClock.clockHandUpdate();
+    masterClock.updateClockSeconds();
 
 
     strokeWeight(10);
     noStroke();
-    secClock.clockDraw(0.05);
+    secClock.clockDraw(masterClock.newCurrSec );
+    console.log(masterClock.currSec);
 
 
     rotate(masterClock.angle);

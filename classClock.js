@@ -8,7 +8,7 @@ class MasterClock {
         this.xOffset = xOffset;
         this.yOffset = yOffset;
 
-        // this.counter = 0;
+        this.secCounter = 0;
         // this.minCounter = 0;
         this.hrCounter = 0;
 
@@ -26,16 +26,18 @@ class MasterClock {
         this.angleA = 0;
 
         this.currAng = 0;
+        this.tempCounter = 0;
         this.prevAng = this.angle + (this.slice * 0.5) - this.clockOffset;
+        // this.tempPrevAng = this.prevAng;
 
         this.notCounted = true;
 
         this.minuteCountOn = true;
         this.inMotion = true;
 
-        // this.currTime = p5.second();
+        // this.currSec = p5.second();
         this.currSec = 0;
-        // this.newCurrTime = (this.currTime + this.counter) % 60;
+        
 
         // this.currMin = p5.minute();
         this.currMin = 0;
@@ -44,7 +46,7 @@ class MasterClock {
         this.currHr = 0;
 
         this.newCurrMin = 0;
-        this.newCurrTime = 0;
+        this.newcurrSec = 0;
         this.newCurrHr = 0;
 
         
@@ -55,9 +57,11 @@ class MasterClock {
         // this.initMin = initMin;
         this.initHr = initHr;
 
+        // this.currSec = initSec + this.secCounter;
         this.currHr = initHr + this.hrCounter;
         this.angle = (this.angle + ((this.slice * 0.5) * (this.initHr * 2)) + 360) % 360;
         this.prevAng = (this.angle + (this.slice * 0.5)) % 360;
+        this.tempPrevAng = this.prevAng;
     }
 
     clockDraw(){
@@ -79,12 +83,12 @@ class MasterClock {
         fill(0);
         ellipse(0,0, this.w - 110, this.h - 55);
 
-        // console.log('this is prev: ' + this.prevAng);
-        // console.log('this is the current angle: ' + this.angle);
+        console.log('this is prev: ' + this.prevAng);
+        console.log('this is the current angle: ' + this.angle);
 
 
-        console.log('current Hour: ' + this.currHr);
-        console.log(this.hrCounter);
+        // console.log('current Hour: ' + this.currHr);
+        // console.log(this.hrCounter);
 
     }
 
@@ -103,6 +107,9 @@ class MasterClock {
                 this.prevAng = (this.prevAng + this.slice) % 360;
             }
 
+            
+        // this.newCurrSec = (this.currSec + this.secCounter) % 60;
+
     }
 
     clockShow(currSec, currMin) { //feed in calculations from other classes and their live updated times on min and sec
@@ -110,7 +117,7 @@ class MasterClock {
         this.currMin = currMin;
 
         this.newCurrHr = (this.currHr + this.hrCounter) % 24; // hr is only thing u need calculated in this class
-
+        this.newCurrSec = (this.currSec + this.secCounter) % 60;
 
         textSize(30);
         fill('green');
@@ -118,7 +125,7 @@ class MasterClock {
 
         text(this.newCurrHr + ':', -50, 350);
         text(this.currMin + ':', 0, 350);
-        text(this.currSec, 50, 350);
+        text(this.newCurrSec, 50, 350);
 
         
 
@@ -137,4 +144,30 @@ class MasterClock {
             this.angleV *= 0.98;
         }
     }
+
+    updateClockSeconds(){
+        
+
+        if (this.inMotion){
+            this.tempCounter += 1;
+            console.log('working')
+            console.log('tempCounter: ' + this.tempCounter);
+            console.log('tempPrevAng: ' + this.tempPrevAng);
+
+            
+            if(this.angle >= this.tempPrevAng) {
+                
+                let updateInt = 60 / this.tempCounter; // logical error
+                this.secCounter += floor(updateInt); // not calculating correctly
+                this.tempPrevAng = this.prevAng;
+                
+                this.tempCounter = 0;
+                console.log('reset')
+            }
+        }
+
+        
+        
+    }
+
 }
