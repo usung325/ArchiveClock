@@ -1,4 +1,4 @@
-class Clock {
+class Clock2 {
     constructor (n, w, h, angleVInit){
         this.n = n;
         this.w = w;
@@ -61,7 +61,7 @@ class Clock {
         this.prevAng = this.angle + (this.slice * 0.5);
         
     }
-
+    
     draw(xOffset, yOffset){
         this.xOffset = xOffset;
         this.yOffset = yOffset;

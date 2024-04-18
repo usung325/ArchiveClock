@@ -1,3 +1,5 @@
+//this sketch uses classClock2.js
+
 
 let clock1;
 let tempAng;
@@ -8,13 +10,12 @@ function setup() {
     background(0);
 
 
-    clock1 = new Clock(30, 600, 600, 0.02);
+    clock1 = new Clock2(30, 600, 600, 0.02);
     clock1.initTime(second(), minute(), hour());
 
-    clockMin = new Clock(30, 300, 300, 0.01);
+    clockMin = new Clock2(30, 300, 300, 0.01);
     clockMin.initTime(second(), minute(), hour());
 }
-
 
 function mousePressed(){
     tempAng = clock1.angle + 360;
