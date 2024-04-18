@@ -7,7 +7,7 @@ let tempAng;
 function setup() {
     createCanvas(800, 800);
     angleMode(DEGREES);
-    background(0);
+    
 
     masterClock = new MasterClock(6, 300, 300, 0.01, 350, 350);
     masterClock.initTime(second(), minute(), hour());
@@ -46,6 +46,8 @@ function keyPressed() {
 }
 
 function draw() {
+    background(0);
+
 
     stroke(1);
     masterClock.setNeedleSpeed(second());
@@ -56,6 +58,8 @@ function draw() {
     strokeWeight(25);
     masterClock.clockDraw();
 
+
+    noStroke();
     masterClock.clockShow(second(), minute()); // temporary, would be clockSec.currSec and clockMin.currMin as parameters in future
     masterClock.clockHandUpdate();
 
