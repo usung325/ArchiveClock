@@ -1,8 +1,9 @@
 class Clock {
-    constructor (n, w, h){
+    constructor (n, w, h, angleVInit){
         this.n = n;
         this.w = w;
         this.h = h;
+        this.timeTraveling = false;
 
         this.xOffset = 0;
         this.yOffset = 0;
@@ -15,9 +16,10 @@ class Clock {
         this.initMin = 0;
         this.initSec = 0;
 
+        this.sliceOf60 = floor(180 / 30);
         this.slice = floor(180 / n);
         this.angle = 0 - (this.slice * (n/2));
-        this.angleV = 0.1;
+        this.angleV = angleVInit;
         this.angleA = 0;
 
         this.currAng = 0;
@@ -41,6 +43,8 @@ class Clock {
         this.newCurrMin = 0;
         this.newCurrTime = 0;
         this.newCurrHr = 0;
+
+        
     }
 
     initTime(initSec, initMin, initHr){
@@ -53,7 +57,7 @@ class Clock {
         this.currMin = initMin + this.minCounter;
         this.currHr = initHr + this.hrCounter;
 
-        this.angle = this.angle+ ((this.slice * 0.5) * (this.initSec * 2));
+        this.angle = (this.angle + ((this.sliceOf60 * 0.5) * (this.initSec * 2)) + 360) % 360;
         this.prevAng = this.angle + (this.slice * 0.5);
         
     }
@@ -83,44 +87,75 @@ class Clock {
         this.angle += this.angleV;
         this.angleV += this.angleA;
 
-        this.angle %= 360;
+        this.angle =  this.angle % 360;
 
 
         //// //// //// DEBUGGING //// //// //// //// //// 
 
-        console.log(this.angle);
+        // console.log(this.angle);
         // console.log('this is angleV:', this.angleV);
-        console.log('this is this.counter:' + this.counter);
+        // console.log('this is this.counter:' + this.counter);
+
+        console.log('this is prev:' + this.prevAng);
+        console.log(this.angle);
 
         //// //// //// DEBUGGING //// //// //// //// //// 
         
     }
 
-    clockUpdate(){
-        this.currAng = floor(this.angle % 360) + (this.slice * 0.5);
+    clockUpdate(MODE, seconds){
 
+        if(MODE == 'second'){
 
-        if (this.currAng >= this.prevAng && this.currAng <= this.prevAng + this.slice && this.inMotion){
-            
-            this.counter += 1;
-
-            if ( this.newCurrTime == 0 ){
-                this.minCounter += 1;
+            this.currAng = floor(this.angle % 360) + (this.slice * 0.5);
+    
+    
+            if (this.currAng >= this.prevAng && this.currAng <= this.prevAng + this.slice && this.inMotion){
+                
+                this.counter += 1;
+    
+                if ( this.newCurrTime == 0 ){
+                    this.minCounter += 1;
+                }
+    
+                this.prevAng = (this.prevAng + this.slice) % 360;
             }
 
-            this.prevAng = (this.prevAng + this.slice) % 360;
         }
 
-        
+        else if(MODE == 'minute'){
+            this.currAng = floor(this.angle % 360) + (this.slice * 0.5);
+    
+    
+            if (seconds == 0){
+                
+                this.counter += 1;
+    
+                if ( this.newCurrTime == 0 ){
+                    this.minCounter += 1;
+                    this.angleV = 0.1;
+                }
+    
+                this.prevAng = (this.prevAng + this.slice) % 360;
+            }
+
+            this.newCurrTime = seconds;
+        }
 
     }
 
     high_NeedleSpeedModify(timeSec){
+        this.angleV = constrain(this.angleV, 0, 6);
+
+
         if (timeSec % 2 == 0) {
-            this.angleA = 0.01
+            this.angleA = 6 / (1200 * 2.5);
+            // this.angleA = 0.01;
         }
 
-        this.angleV *= 0.98;
+        if (!this.timeTraveling){
+            this.angleV *= 0.98;
+        }
     }
 
     clockShow(xOffset, yOffset){

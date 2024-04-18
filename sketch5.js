@@ -8,8 +8,11 @@ function setup() {
     background(0);
 
 
-    clock1 = new Clock(30, 400, 400);
+    clock1 = new Clock(30, 600, 600, 0.02);
     clock1.initTime(second(), minute(), hour());
+
+    clockMin = new Clock(30, 300, 300, 0.01);
+    clockMin.initTime(second(), minute(), hour());
 }
 
 
@@ -29,18 +32,40 @@ function mouseReleased(){
     
 }
 
+function keyPressed() {
+    if (key == 'r') {
+        clock1.angleA = 1;
+        clock1.timeTraveling = true;
+    }
+    
+    if (key == 'l') {
+        clock1.timeTraveling = false;
+    }
+}
+
+
 function draw() {
 
     clock1.high_NeedleSpeedModify(second());
-
+    
+    
     clock1.draw(350, 350);
+    
+    clockMin.draw(0,0);
+    // clockMin.clockShow(0,0);
+    clockMin.clockUpdate('minute', clock1.newCurrTime);
+    
     clock1.clockShow(350, 350);
-    clock1.clockUpdate();
+    clock1.clockUpdate('second', 0);
+
+    // clockMin.draw(0, 0);
+    // clockMin.cloockShow(0, 0);
+    // clockMin.clockUpdate();
 
     // translate(width/2, height/2);
     rotate(clock1.angle)
     fill(255,0,0);
-    ellipse(100,20,40);
+    ellipse(200,10,20);
 
 
 }
