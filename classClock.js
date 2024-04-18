@@ -116,9 +116,9 @@ class MasterClock {
         fill('green');
         textAlign(CENTER);
 
-        text(this.newCurrHr + ':', -50, 10);
-        text(this.currMin + ':', 0, 10);
-        text(this.currSec, 50, 10);
+        text(this.newCurrHr + ':', -50, 350);
+        text(this.currMin + ':', 0, 350);
+        text(this.currSec, 50, 350);
 
         
 

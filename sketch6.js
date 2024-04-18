@@ -1,4 +1,6 @@
 let masterClock;
+let minuteClock;
+let secClock;
 let tempAng;
 
 
@@ -7,8 +9,13 @@ function setup() {
     angleMode(DEGREES);
     background(0);
 
-    masterClock = new MasterClock(6, 600, 600, 0.01, 350, 350);
+    masterClock = new MasterClock(6, 300, 300, 0.01, 350, 350);
     masterClock.initTime(second(), minute(), hour());
+
+    minuteClock = new MinClock(30, 500, 500);
+
+    secClock = new SecClock(50, 50);
+    
 
 }
 
@@ -40,17 +47,28 @@ function keyPressed() {
 
 function draw() {
 
+    stroke(1);
     masterClock.setNeedleSpeed(second());
 
     translate(350, 350);
+    strokeWeight(5);
+    minuteClock.clockDraw(masterClock.angle);
     strokeWeight(25);
     masterClock.clockDraw();
+
     masterClock.clockShow(second(), minute()); // temporary, would be clockSec.currSec and clockMin.currMin as parameters in future
     masterClock.clockHandUpdate();
 
 
+    strokeWeight(10);
+    noStroke();
+    secClock.clockDraw(0.05);
+
+
     rotate(masterClock.angle);
 
+    stroke(0);
+    strokeWeight(20);
     fill('red');
     ellipse(200,100,30);
 
