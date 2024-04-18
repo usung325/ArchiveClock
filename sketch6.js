@@ -43,6 +43,7 @@ function draw() {
     masterClock.setNeedleSpeed(second());
 
     translate(350, 350);
+    strokeWeight(25);
     masterClock.clockDraw();
     masterClock.clockShow(second(), minute()); // temporary, would be clockSec.currSec and clockMin.currMin as parameters in future
     masterClock.clockHandUpdate();

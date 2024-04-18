@@ -20,7 +20,7 @@ class MasterClock {
         this.slice = floor(180 / n);
 
 
-        this.clockOffset = 0 // this is just for clock to be shifted a little bit
+        this.clockOffset = this.slice; // this is just for clock to be shifted a little bit
         this.angle = 0 - (this.slice * (n/2)) + (this.slice * 0.5)  - this.clockOffset;
         this.angleV = angleVInit;
         this.angleA = 0;
@@ -57,7 +57,7 @@ class MasterClock {
 
         this.currHr = initHr + this.hrCounter;
         this.angle = (this.angle + ((this.slice * 0.5) * (this.initHr * 2)) + 360) % 360;
-        this.prevAng = this.angle + (this.slice * 0.5);
+        this.prevAng = (this.angle + (this.slice * 0.5)) % 360;
     }
 
     clockDraw(){
@@ -66,6 +66,7 @@ class MasterClock {
             let ang = this.angle % (360);
     
             fill(255);
+            
     
             if (ang >= a - + (this.slice * 0.5) && ang <= a  - (this.slice * 0.5) + this.slice) {
                 fill('red');
@@ -76,14 +77,14 @@ class MasterClock {
         }
 
         fill(0);
-        ellipse(0,0, this.w - 90, this.h - 90);
+        ellipse(0,0, this.w - 110, this.h - 55);
 
-        console.log('this is prev: ' + this.prevAng);
-        console.log('this is the current angle: ' + this.angle);
+        // console.log('this is prev: ' + this.prevAng);
+        // console.log('this is the current angle: ' + this.angle);
 
 
-        // console.log('current Hour: ' + this.currHr);
-        // console.log(this.hrCounter);
+        console.log('current Hour: ' + this.currHr);
+        console.log(this.hrCounter);
 
     }
 
@@ -108,16 +109,16 @@ class MasterClock {
         this.currSec = currSec;
         this.currMin = currMin;
 
-        this.newCurrHr = (this.currHr + this.hrCounter) % 12 + 1; // hr is only thing u need calculated in this class
+        this.newCurrHr = (this.currHr + this.hrCounter) % 24; // hr is only thing u need calculated in this class
 
 
         textSize(30);
-        fill('green');
+        fill('red');
         textAlign(CENTER);
 
-        text(this.newCurrHr + ':', -50, 0);
-        text(this.currMin + ':', 0, 0);
-        text(this.currSec, 50, 0);
+        text(this.newCurrHr + ':', -50, 10);
+        text(this.currMin + ':', 0, 10);
+        text(this.currSec, 50, 10);
 
         
 
