@@ -7,7 +7,7 @@ function setup() {
     angleMode(DEGREES);
     background(0);
 
-    masterClock = new MasterClock(6, 600, 600, 0.1, 350, 350);
+    masterClock = new MasterClock(6, 600, 600, 0.01, 350, 350);
     masterClock.initTime(second(), minute(), hour());
 
 }

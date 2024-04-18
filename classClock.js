@@ -113,7 +113,7 @@ class MasterClock {
 
 
         textSize(30);
-        fill('red');
+        fill('green');
         textAlign(CENTER);
 
         text(this.newCurrHr + ':', -50, 10);
@@ -124,12 +124,12 @@ class MasterClock {
 
     }
 
-    setNeedleSpeed(timeSec){ // compltely arbitrary speed for needle. need edit.
+    setNeedleSpeed(timeSec){ 
         this.angleV = constrain(this.angleV, 0, 30);
 
 
         if (timeSec % 2 == 0) {
-            this.angleA = 6 / (1200 * 2.5);
+            this.angleA = 0.0005; // compltely arbitrary speed for needle. need edit.
             // this.angleA = 0.01;
         }
 
