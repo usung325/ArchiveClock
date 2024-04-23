@@ -1,5 +1,6 @@
 class MasterClock {
-    constructor (n, w, h, angleVInit, xOffset, yOffset){
+    constructor(n, w, h, angleVInit, xOffset, yOffset) {
+        this.i = 0;
         this.n = n;
         this.w = w;
         this.h = h;
@@ -21,7 +22,7 @@ class MasterClock {
 
 
         this.clockOffset = this.slice; // this is just for clock to be shifted a little bit
-        this.angle = 0 - (this.slice * (n/2)) + (this.slice * 0.5)  - this.clockOffset;
+        this.angle = 0 - (this.slice * (n / 2)) + (this.slice * 0.5) - this.clockOffset;
         this.angleV = angleVInit;
         this.angleA = 0;
 
@@ -37,7 +38,7 @@ class MasterClock {
 
         // this.currSec = p5.second();
         this.currSec = 0;
-        
+
 
         // this.currMin = p5.minute();
         this.currMin = 0;
@@ -49,9 +50,15 @@ class MasterClock {
         this.newcurrSec = 0;
         this.newCurrHr = 0;
 
-        
+
+        /////////// for clockSubUpdate()
+
+        this.tempAngle = 0;
+        this.prevAngle = -1;
+
+
     }
-    
+
     initTime(initSec, initMin, initHr) {
         // this.initSec = initSec;
         // this.initMin = initMin;
@@ -64,27 +71,27 @@ class MasterClock {
         this.tempPrevAng = this.prevAng;
     }
 
-    clockDraw(){
+    clockDraw() {
         for (let a = 0 + (this.slice * 0.5); a < (360 + (this.slice * 0.5)); a += this.slice) {
 
             let ang = this.angle % (360);
-    
+
             fill(255);
-            
-    
-            if (ang >= a - + (this.slice * 0.5) && ang <= a  - (this.slice * 0.5) + this.slice) {
+
+
+            if (ang >= a - + (this.slice * 0.5) && ang <= a - (this.slice * 0.5) + this.slice) {
                 fill('red');
             }
-    
+
             arc(0, 0, this.w, this.h, a, a + this.slice, PIE)
-    
+
         }
 
         fill(0);
-        ellipse(0,0, this.w - 110, this.h - 55);
+        ellipse(0, 0, this.w - 110, this.h - 55);
 
-        console.log('this is prev: ' + this.prevAng);
-        console.log('this is the current angle: ' + this.angle);
+        // console.log('this is prev: ' + this.prevAng);
+        // console.log('this is the current angle: ' + this.angle);
 
 
         // console.log('current Hour: ' + this.currHr);
@@ -92,22 +99,22 @@ class MasterClock {
 
     }
 
-    clockHandUpdate(){
+    clockHandUpdate() {
 
         this.angle += this.angleV;
         this.angleV += this.angleA;
-        this.angle =  this.angle % 360;
+        this.angle = this.angle % 360;
 
-        
+
         this.currAng = floor(this.angle % 360);
-        console.log(this.currAng)
-    
-            if (this.currAng >= this.prevAng && this.currAng <= this.prevAng + this.slice && this.inMotion){
-                this.hrCounter += 1;
-                this.prevAng = (this.prevAng + this.slice) % 360;
-            }
+        // console.log(this.currAng)
 
-            
+        if (this.currAng >= this.prevAng && this.currAng <= this.prevAng + this.slice && this.inMotion) {
+            this.hrCounter += 1;
+            this.prevAng = (this.prevAng + this.slice) % 360;
+        }
+
+
         // this.newCurrSec = (this.currSec + this.secCounter) % 60;
 
     }
@@ -127,47 +134,89 @@ class MasterClock {
         text(this.currMin + ':', 0, 350);
         text(this.newCurrSec, 50, 350);
 
-        
+
 
     }
 
-    setNeedleSpeed(timeSec){ 
-        this.angleV = constrain(this.angleV, 0, 30);
+    setNeedleSpeed(timeSec) {
+        this.angleV = constrain(this.angleV, 0, 29);
 
 
         if (timeSec % 2 == 0) {
-            this.angleA = 0.0005; // compltely arbitrary speed for needle. need edit.
+            this.angleA = 0.005; // compltely arbitrary speed for needle. need edit.
             // this.angleA = 0.01;
         }
 
-        if (!this.timeTraveling){
+        if (!this.timeTraveling) {
             this.angleV *= 0.98;
         }
     }
 
-    updateClockSeconds(){
-        
+    updateSubClock(counter, mode) {
+        // this only works if this.angle range is from 0-360.
+        //if not, then ratio does not work correctly.
+        if (this.prevAngle == -1) {
+            this.tempAngle = this.angle;
+            this.prevAngle = this.tempAngle;
+        }
 
-        if (this.inMotion){
-            this.tempCounter += 1;
-            console.log('working')
-            console.log('tempCounter: ' + this.tempCounter);
-            console.log('tempPrevAng: ' + this.tempPrevAng);
+        else {
 
-            
-            if(this.angle >= this.tempPrevAng) {
+            this.prevAngle = this.tempAngle;
+            this.tempAngle = this.angle;
+
+            let angDiff = this.angle - this.prevAngle;
+            console.log('ANGLEDIFF: ' + angDiff);
+            // console.log('PREVANGLE: ' + this.prevAngle);
+
+            if (mode == 'seconds') {
+                counter += (3600 * (angDiff / this.slice));
+                // console.log('TEST: ' + counter);
                 
-                let updateInt = 60 / this.tempCounter; // logical error
-                this.secCounter += floor(updateInt); // not calculating correctly
-                this.tempPrevAng = this.prevAng;
-                
-                this.tempCounter = 0;
-                console.log('reset')
+            }
+
+            else if (mode == 'minutes') {
+                counter += (60 * ((angDiff / (this.slice * 0.5)) ));
+                console.log('ratio: ' + (angDiff / (this.slice * 0.5)) );
             }
         }
 
-        
-        
+        return counter;
+    }
+
+    updateClockSeconds() { // this was a test, DON'T USE
+
+
+
+        if (this.inMotion) {
+
+            this.tempCounter += 1;
+            // console.log('working')
+            // console.log('tempCounter: ' + this.tempCounter);
+            // console.log('tempPrevAng: ' + this.tempPrevAng);
+
+            if (this.angle >= this.tempPrevAng) {
+
+                let updateInt = floor(3600 / this.tempCounter); // logical error
+
+                if (this.i <= this.tempCounter) {
+                    this.secCounter += updateInt; // not calculating correctly
+                    this.i++
+                }
+                else {
+                    this.tempPrevAng = this.prevAng;
+                    this.i = 0;
+                }
+                // this.tempCounter = 0;
+            }
+        }
+
+        // wrong approach, need to update values LIVE based on this.angle
+        // since this.angle clips/jumps, we can calculate based on difference from 
+        // current this.angle and past this.angle & add every time they change.
+
+
+
     }
 
 }

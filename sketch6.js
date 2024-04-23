@@ -8,13 +8,16 @@ function setup() {
     createCanvas(800, 800);
     angleMode(DEGREES);
     
-
+    // angleVInit starts w arbitrary value
     masterClock = new MasterClock(6, 300, 300, 0.01, 350, 350);
+    minuteClock = new MinClock(30, 500, 500);
+    secClock = new SecClock(50, 50);
+    minuteClock.initClock(minute());
+
+    
     masterClock.initTime(second(), minute(), hour());
 
-    minuteClock = new MinClock(30, 500, 500);
 
-    secClock = new SecClock(50, 50);
     
 
 }
@@ -54,7 +57,8 @@ function draw() {
 
     translate(350, 350);
     strokeWeight(5);
-    minuteClock.clockDraw(masterClock.angle);
+    
+    minuteClock.clockDraw();
     strokeWeight(25);
     masterClock.clockDraw();
     
@@ -62,13 +66,15 @@ function draw() {
     noStroke();
     masterClock.clockShow(second(), minute()); // temporary, would be clockSec.currSec and clockMin.currMin as parameters in future
     masterClock.clockHandUpdate();
-    masterClock.updateClockSeconds();
+    let count = masterClock.updateSubClock(minuteClock.counter, 'minutes');
+    minuteClock.clockUpdate(count);
+    // masterClock.updateClockSeconds();
 
 
     strokeWeight(10);
     noStroke();
     secClock.clockDraw(masterClock.newCurrSec );
-    console.log(masterClock.currSec);
+    // console.log(masterClock.currSec);
 
 
     rotate(masterClock.angle);
