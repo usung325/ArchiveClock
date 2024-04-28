@@ -6,6 +6,12 @@ class SecClock {
 
 
         // this.slice = floor(180 / n);
+        this.counter = 0;
+        this.angle = 0;
+        this.tempCounter = 0;
+        this.currMin = 0;
+
+        this.newCurrSec = 0;
 
     }
 
@@ -29,6 +35,28 @@ class SecClock {
         fill(0);
         ellipse(0, 0, this.w - 20, this.h - 20);
 
+
+    }
+
+    clockUpdate(counter){
+
+        this.tempCounter = counter;
+        let newCounts = counter - this.counter;
+        // newCounts *= 5;
+        // console.log('new counts of this.slice applied: ' + newCounts);
+
+        // if(newCounts < 1) {
+        //     // this.angle += 0.01; //completely arbitrary
+        //     return;
+        // }
+
+        // else {
+            for(let i = 0; i < newCounts; i++){
+                this.angle += (this.slice);
+            }
+    
+            this.counter = this.tempCounter;
+        // }
 
     }
 }

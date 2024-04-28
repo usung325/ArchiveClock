@@ -60,10 +60,12 @@ function draw() {
     
     
     noStroke();
-    masterClock.clockShow(second(), minute()); // temporary, would be clockSec.currSec and clockMin.currMin as parameters in future
+    masterClock.clockShow(secClock.counter, minuteClock.counter); // temporary, would be clockSec.currSec and clockMin.currMin as parameters in future
     masterClock.clockHandUpdate();
-    let count = masterClock.updateSubClock(minuteClock.counter, 'minutes');
-    minuteClock.clockUpdate(count);
+    let minCount = masterClock.updateSubClock(minuteClock.counter, 'minutes');
+    let secCount = masterClock.updateSubClock(minuteClock.counter, 'seconds');
+    minuteClock.clockUpdate(minCount);
+    secClock.clockUpdate(secCount); // this seconds need to loop 60 times per minute.
     // masterClock.updateClockSeconds();
 
 

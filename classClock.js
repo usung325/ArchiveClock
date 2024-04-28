@@ -10,7 +10,7 @@ class MasterClock {
         this.yOffset = yOffset;
 
         this.secCounter = 0;
-        // this.minCounter = 0;
+        this.minCounter = 0;
         this.hrCounter = 0;
 
         this.initHr = 0;
@@ -50,7 +50,6 @@ class MasterClock {
         this.newcurrSec = 0;
         this.newCurrHr = 0;
 
-
         /////////// for clockSubUpdate()
 
         this.tempAngle = 0;
@@ -61,8 +60,11 @@ class MasterClock {
 
     initTime(initSec, initMin, initHr) {
         // this.initSec = initSec;
-        // this.initMin = initMin;
+        this.initMin = initMin;
         this.initHr = initHr;
+
+        this.currSec = initSec + this.secCounter;
+        this.currMin = initMin + this.minCounter;
 
         // this.currSec = initSec + this.secCounter;
         this.currHr = initHr + this.hrCounter;
@@ -118,19 +120,21 @@ class MasterClock {
 
     }
 
-    clockShow(currSec, currMin) { //feed in calculations from other classes and their live updated times on min and sec
-        this.currSec = currSec;
-        this.currMin = currMin;
+    clockShow(secCounter, minCounter) { //feed in calculations from other classes and their live updated times on min and sec
+        
+        this.minCounter = minCounter
+        this.secCounter = secCounter;
 
         this.newCurrHr = (this.currHr + this.hrCounter) % 24; // hr is only thing u need calculated in this class
         this.newCurrSec = (this.currSec + this.secCounter) % 60;
+        this.newCurrMin = (this.currMin + this.minCounter) % 60;
 
         textSize(30);
         fill('green');
         textAlign(CENTER);
 
         text(this.newCurrHr + ':', -50, 350);
-        text(this.currMin + ':', 0, 350);
+        text(this.newCurrMin + ':', 0, 350);
         text(this.newCurrSec, 50, 350);
 
 
@@ -154,6 +158,7 @@ class MasterClock {
     updateSubClock(counter, mode) {
         // this only works if this.angle range is from 0-360.
         //if not, then ratio does not work correctly.
+        // now fixed by using this.currAng.
         if (this.prevAngle == -1) {
             this.tempAngle = this.currAng;
             this.prevAngle = this.tempAngle;
