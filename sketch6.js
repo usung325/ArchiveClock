@@ -16,10 +16,6 @@ function setup() {
 
     
     masterClock.initTime(second(), minute(), hour());
-
-
-    
-
 }
 
 
@@ -80,9 +76,9 @@ function draw() {
     rotate(masterClock.angle);
 
     stroke(0);
-    strokeWeight(20);
+    strokeWeight(2);
     fill('red');
-    ellipse(200,100,30);
+    ellipse(100,50,20);
 
 }
 

@@ -21,9 +21,7 @@ class MinClock {
     }
 
     clockDraw(){
-        for (let a = 0 + (this.slice * 0.5); a < (360 + (this.slice * 0.5)); a += this.slice) {
-
-            
+        for (let a = 0 + (this.slice * 0.5); a < (360 + (this.slice * 0.5)); a += this.slice) { 
             
             let ang = this.angle  % 360;
 
@@ -49,22 +47,21 @@ class MinClock {
 
         this.tempCounter = counter;
         let newCounts = counter - this.counter;
-        newCounts *= 5;
-        console.log('new counts of this.slice applied: ' + newCounts);
+        // newCounts *= 5;
+        // console.log('new counts of this.slice applied: ' + newCounts);
 
-        if(newCounts < 1) {
-            // this.angle += 0.01; //completely arbitrary
-            return;
-        }
+        // if(newCounts < 1) {
+        //     // this.angle += 0.01; //completely arbitrary
+        //     return;
+        // }
 
-        else {
+        // else {
             for(let i = 0; i < newCounts; i++){
-                this.angle += (this.slice / 10);
+                this.angle += (this.slice);
             }
     
             this.counter = this.tempCounter;
-        }
+        // }
 
-        this.newCurrMin = this.currMin + this.counter;
     }
 }

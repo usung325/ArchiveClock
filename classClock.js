@@ -105,7 +105,6 @@ class MasterClock {
         this.angleV += this.angleA;
         this.angle = this.angle % 360;
 
-
         this.currAng = floor(this.angle % 360);
         // console.log(this.currAng)
 
@@ -156,28 +155,28 @@ class MasterClock {
         // this only works if this.angle range is from 0-360.
         //if not, then ratio does not work correctly.
         if (this.prevAngle == -1) {
-            this.tempAngle = this.angle;
+            this.tempAngle = this.currAng;
             this.prevAngle = this.tempAngle;
         }
 
         else {
 
             this.prevAngle = this.tempAngle;
-            this.tempAngle = this.angle;
+            this.tempAngle = this.currAng;
 
-            let angDiff = this.angle - this.prevAngle;
-            console.log('ANGLEDIFF: ' + angDiff);
+            let angDiff = (this.currAng - this.prevAngle + 360) % 360;
+
+            // console.log('ANGLEDIFF: ' + angDiff);
             // console.log('PREVANGLE: ' + this.prevAngle);
 
             if (mode == 'seconds') {
                 counter += (3600 * (angDiff / this.slice));
                 // console.log('TEST: ' + counter);
-                
             }
 
             else if (mode == 'minutes') {
-                counter += (60 * ((angDiff / (this.slice * 0.5)) ));
-                console.log('ratio: ' + (angDiff / (this.slice * 0.5)) );
+                counter += (60 * ((angDiff / (this.slice)) ));
+                // console.log('counter: ' + counter );
             }
         }
 
