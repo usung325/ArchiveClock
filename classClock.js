@@ -175,7 +175,7 @@ class MasterClock {
             // console.log('PREVANGLE: ' + this.prevAngle);
 
             if (mode == 'seconds') {
-                counter += (3600 * (angDiff / this.slice));
+                counter += (3600 * ((angDiff / (this.slice)) ));
                 // console.log('TEST: ' + counter);
             }
 

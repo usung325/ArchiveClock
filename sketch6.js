@@ -13,6 +13,7 @@ function setup() {
     minuteClock = new MinClock(30, 500, 500);
     secClock = new SecClock(50, 50);
     minuteClock.initClock(minute());
+    secClock.initClock(second());
 
     
     masterClock.initTime(second(), minute(), hour());
@@ -62,17 +63,23 @@ function draw() {
     noStroke();
     masterClock.clockShow(secClock.counter, minuteClock.counter); // temporary, would be clockSec.currSec and clockMin.currMin as parameters in future
     masterClock.clockHandUpdate();
+    
     let minCount = masterClock.updateSubClock(minuteClock.counter, 'minutes');
-    let secCount = masterClock.updateSubClock(minuteClock.counter, 'seconds');
     minuteClock.clockUpdate(minCount);
-    secClock.clockUpdate(secCount); // this seconds need to loop 60 times per minute.
+    
     // masterClock.updateClockSeconds();
-
-
+    
+    
     strokeWeight(10);
     noStroke();
-    secClock.clockDraw(masterClock.newCurrSec );
+    secClock.clockDraw();
+
+    let secCount = masterClock.updateSubClock(secClock.counter, 'seconds');
+    secClock.clockUpdate(secCount); // this seconds need to loop 60 times per minute.
+    
     // console.log(masterClock.currSec);
+    console.log('min: ' + minCount);
+    console.log('sec: ' + secCount);
 
 
     rotate(masterClock.angle);

@@ -44,7 +44,6 @@ class MinClock {
     }
 
     clockUpdate(counter){
-
         this.tempCounter = counter;
         let newCounts = counter - this.counter;
         // newCounts *= 5;
