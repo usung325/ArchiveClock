@@ -68,7 +68,7 @@ class MasterClock {
 
         // this.currSec = initSec + this.secCounter;
         this.currHr = initHr + this.hrCounter;
-        this.angle = (this.angle + ((this.slice * 0.5) * (this.initHr * 2)) + 360) % 360;
+        this.angle = (((initHr - 1) * this.slice) + (this.slice * 0.5) + 270) % 360 //(this.angle + ((this.slice * 0.5) * (this.initHr * 2)) + 360) % 360;
         this.prevAng = (this.angle + (this.slice * 0.5)) % 360;
         this.tempPrevAng = this.prevAng;
     }
@@ -121,7 +121,7 @@ class MasterClock {
     }
 
     clockShow(secCounter, minCounter) { //feed in calculations from other classes and their live updated times on min and sec
-        
+
         this.minCounter = minCounter
         this.secCounter = secCounter;
 
@@ -174,19 +174,24 @@ class MasterClock {
             // console.log('ANGLEDIFF: ' + angDiff);
             // console.log('PREVANGLE: ' + this.prevAngle);
 
-            if (mode == 'seconds') {
-                counter += (3600 * ((angDiff / (this.slice)) ));
-                // console.log('TEST: ' + counter);
-            }
 
-            else if (mode == 'minutes') {
-                counter += (60 * ((angDiff / (this.slice)) ));
+
+            if (mode == 'minutes') {
+                counter += (60 * ((angDiff / (this.slice))));
                 // console.log('counter: ' + counter );
             }
         }
 
         return counter;
     }
+
+    updateSubClock2(counter, mode) {
+
+        // counter *= 60
+
+        return counter;
+    }
+
 
     updateClockSeconds() { // this was a test, DON'T USE
 

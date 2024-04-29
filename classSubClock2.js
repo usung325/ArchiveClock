@@ -20,12 +20,12 @@ class SecClock {
     }
 
     initClock(currSec){
-        this.newCurrSec = (0) + (360 - (0)) * (currSec - 0) / (59 - 0)
+        this.newCurrSec = (0) + (360 - (0)) * (currSec - 0) / (59 - 0);
+        this.currSec = currSec;
     }
 
     clockDraw() {
         // noStroke();
-
         // let newCurrSec =  (0) + (360 - (0)) * (this.angle - 0) / (59 - 0); //re-map formula
         fill(255)
         if (this.newCurrSec != 0){
@@ -35,16 +35,24 @@ class SecClock {
             ellipse(0,0,this.w, this.h);
         }
 
-
         fill(0);
         ellipse(0, 0, this.w - 20, this.h - 20);
-
-
     }
 
     clockUpdate(counter){
-        this.counter = counter;
-        this.newCurrSec = counter + this.newCurrSec;
+
+        this.tempCounter = counter;
+        let newCounts = counter - this.counter;
+
+        for(let i = 0; i < newCounts; i++){
+            this.angle += (this.slice);
+        }
+
+        this.counter = this.tempCounter;
+
+        // this.counter = counter;
+        this.newCurrSec = this.newCurrSec + counter;
+        // this.counter += 1;
 
     }
 }

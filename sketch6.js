@@ -74,7 +74,7 @@ function draw() {
     noStroke();
     secClock.clockDraw();
 
-    let secCount = masterClock.updateSubClock(secClock.counter, 'seconds');
+    let secCount = masterClock.updateSubClock2(minuteClock.counter, 'seconds');
     secClock.clockUpdate(secCount); // this seconds need to loop 60 times per minute.
     
     // console.log(masterClock.currSec);
