@@ -5,8 +5,19 @@ html, body {
 }
 
 canvas {
+  position:absolute;
+  z-index:10;
   display: block;
   
-  padding-left: 20em;
-  margin-top: -5em;
+  /* padding-left: 20em;
+  margin-top: -5em; */
+}
+
+img {
+  z-index:9;
+}
+
+video {
+  position:absolute;
+  z-index:12;
 }

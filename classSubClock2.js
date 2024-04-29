@@ -25,6 +25,7 @@ class SecClock {
     }
 
     clockDraw() {
+        
         // noStroke();
         // let newCurrSec =  (0) + (360 - (0)) * (this.angle - 0) / (59 - 0); //re-map formula
         fill(255)
@@ -35,8 +36,10 @@ class SecClock {
             ellipse(0,0,this.w, this.h);
         }
 
+        blendMode(REMOVE);
         fill(0);
         ellipse(0, 0, this.w - 20, this.h - 20);
+        blendMode(BLEND);
 
         rectMode(CENTER);
         fill(255)

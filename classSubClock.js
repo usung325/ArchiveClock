@@ -21,6 +21,7 @@ class MinClock {
     }
 
     clockDraw(){
+        
         for (let a = 0 + (this.slice * 0.5); a < (360 + (this.slice * 0.5)); a += this.slice) { 
             
             let ang = this.angle  % 360;
@@ -35,12 +36,20 @@ class MinClock {
             arc(0, 0, this.w, this.h, a, a + this.slice, PIE)
     
         }
-
+        blendMode(REMOVE);
         fill(0);
+
+        for(let i =45; i < 360+45; i += 6){
+            rotate(i);
+            rect(0,0,1000,15);
+            rotate(-i);
+        }
+
+
         // strokeWeight(2);
         // stroke('white')
-        ellipse(0,0, this.w - 100, this.h - 100); //ellipse(0,0, this.w - 20, this.h - 100);
-
+        ellipse(0,0, this.w - 200, this.h - 200); //ellipse(0,0, this.w - 20, this.h - 100);
+        blendMode(BLEND);
     }
 
     clockUpdate(counter){

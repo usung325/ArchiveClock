@@ -91,10 +91,36 @@ class MasterClock {
             arc(0, 0, this.w, this.h, a, a + this.slice, PIE)
 
         }
+        blendMode(REMOVE);
+
+        rotate(45);
+        rect(0,0,500,10);
+        rotate(-45);
+
+        rotate(75);
+        rect(0,0,500,10);
+        rotate(-75);
+
+        rotate(105);
+        rect(0,0,500,10);
+        rotate(-105);
+
+        rotate(135);
+        rect(0,0,500,10);
+        rotate(-135);
+
+        rotate(165);
+        rect(0,0,500,10);
+        rotate(-165);
+
+        rotate(195);
+        rect(0,0,500,10);
+        rotate(-195);
+
 
         fill(0);
         ellipse(0, 0, this.w - 130, this.h - 130);  //ellipse(0, 0, this.w - 110, this.h - 55);
-
+        blendMode(BLEND);
         // console.log('this is prev: ' + this.prevAng);
         // console.log('this is the current angle: ' + this.angle);
 
@@ -127,7 +153,7 @@ class MasterClock {
     }
 
     clockShow(secCounter, minCounter) { //feed in calculations from other classes and their live updated times on min and sec
-
+        
         this.minCounter = minCounter
         this.secCounter = secCounter;
 
@@ -135,17 +161,21 @@ class MasterClock {
         this.newCurrSec = (this.currSec + this.secCounter) % 60;
         this.newCurrMin = (this.currMin + this.minCounter) % 60;
 
-        textSize(30);
-        fill('green');
-        textAlign(CENTER);
+        textSize(100);
+        fill('white');
+        textAlign(RIGHT);
 
-        text(this.newCurrHr + ':', -50, 350 + 100);
-        text(this.newCurrMin + ':', 0, 350 + 100);
-        text(this.newCurrSec, 50, 350 + 100);
+        // fill(0)
+        // rect(0,500,200);
+        text(this.newCurrHr + ':', -50 + 500 + 100, 400 + 80);
+        text(this.newCurrMin + ':' , 0 + 600 + 100, 400 + 80);
+        text(this.newCurrSec, 50 + 680 + 100, 400 + 80);
 
         this.currDay = (int((this.hrCounter + this.initHr) / (24))) % 84 + 1
 
-        text('day: ' + this.currDay, 0, 420 + 100);
+        textSize(50);
+        text('day: ' + this.currDay + '/84', 830, 380);
+        
     }
 
 
