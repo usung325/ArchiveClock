@@ -37,6 +37,11 @@ class SecClock {
 
         fill(0);
         ellipse(0, 0, this.w - 20, this.h - 20);
+
+        rectMode(CENTER);
+        fill(255)
+        rect(0,0,10,40);
+        rect(0,0,40,10);
     }
 
     clockUpdate(counter){

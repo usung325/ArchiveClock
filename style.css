@@ -7,6 +7,6 @@ html, body {
 canvas {
   display: block;
   
-  /* padding-left: 24em; */
-  /* padding-top: 10em; */
+  padding-left: 20em;
+  margin-top: -5em;
 }

@@ -55,6 +55,9 @@ class MasterClock {
         this.tempAngle = 0;
         this.prevAngle = -1;
 
+        this.currDay = 0;
+        this.isDayCounted = false;
+
 
     }
 
@@ -84,13 +87,13 @@ class MasterClock {
             if (ang >= a - + (this.slice * 0.5) && ang <= a - (this.slice * 0.5) + this.slice) {
                 fill('red');
             }
-
+            // strokeWeight(60)
             arc(0, 0, this.w, this.h, a, a + this.slice, PIE)
 
         }
 
         fill(0);
-        ellipse(0, 0, this.w - 110, this.h - 55);
+        ellipse(0, 0, this.w - 130, this.h - 130);  //ellipse(0, 0, this.w - 110, this.h - 55);
 
         // console.log('this is prev: ' + this.prevAng);
         // console.log('this is the current angle: ' + this.angle);
@@ -98,6 +101,8 @@ class MasterClock {
 
         // console.log('current Hour: ' + this.currHr);
         // console.log(this.hrCounter);
+        
+        
 
     }
 
@@ -113,6 +118,7 @@ class MasterClock {
         if (this.currAng >= this.prevAng && this.currAng <= this.prevAng + this.slice && this.inMotion) {
             this.hrCounter += 1;
             this.prevAng = (this.prevAng + this.slice) % 360;
+            
         }
 
 
@@ -133,13 +139,15 @@ class MasterClock {
         fill('green');
         textAlign(CENTER);
 
-        text(this.newCurrHr + ':', -50, 350);
-        text(this.newCurrMin + ':', 0, 350);
-        text(this.newCurrSec, 50, 350);
+        text(this.newCurrHr + ':', -50, 350 + 100);
+        text(this.newCurrMin + ':', 0, 350 + 100);
+        text(this.newCurrSec, 50, 350 + 100);
 
+        this.currDay = (int((this.hrCounter + this.initHr) / (24))) % 84 + 1
 
-
+        text('day: ' + this.currDay, 0, 420 + 100);
     }
+
 
     setNeedleSpeed(timeSec) {
         this.angleV = constrain(this.angleV, 0, 29);

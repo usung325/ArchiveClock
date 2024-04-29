@@ -5,13 +5,13 @@ let tempAng;
 
 
 function setup() {
-    createCanvas(800, 800);
+    createCanvas(1200, 1200);
     angleMode(DEGREES);
     
     // angleVInit starts w arbitrary value
-    masterClock = new MasterClock(6, 300, 300, 0.01, 350, 350);
-    minuteClock = new MinClock(30, 500, 500);
-    secClock = new SecClock(50, 50);
+    masterClock = new MasterClock(6, 500, 500, 0.01, 700, 600);
+    minuteClock = new MinClock(30, 800, 800);
+    secClock = new SecClock(200, 200);
     minuteClock.initClock(minute());
     secClock.initClock(second());
 
@@ -52,7 +52,7 @@ function draw() {
     stroke(1);
     masterClock.setNeedleSpeed(second());
 
-    translate(350, 350);
+    translate(width/2, height/2);
     strokeWeight(5);
     
     minuteClock.clockDraw();
@@ -87,7 +87,7 @@ function draw() {
     stroke(0);
     strokeWeight(2);
     fill('red');
-    ellipse(100,50,20);
+    ellipse(140,70,20);
 
 }
 

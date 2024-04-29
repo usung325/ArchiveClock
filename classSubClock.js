@@ -39,7 +39,7 @@ class MinClock {
         fill(0);
         // strokeWeight(2);
         // stroke('white')
-        ellipse(0,0, this.w - 20, this.h - 100);
+        ellipse(0,0, this.w - 100, this.h - 100); //ellipse(0,0, this.w - 20, this.h - 100);
 
     }
 
