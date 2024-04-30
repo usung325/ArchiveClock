@@ -17,7 +17,24 @@ img {
   z-index:9;
 }
 
+image {
+  z-index:28;
+}
+
 video {
   position:absolute;
   z-index:12;
+}
+
+.description {
+  color:'white';
+}
+
+.main {
+  position:absolute;
+}
+
+
+a {
+  color:white;
 }

@@ -4,25 +4,33 @@ let secClock;
 let tempAng;
 
 let projIndex = 0;
-let gif;
-let gif2;
+var gif1;
+var gif2;
 var vid;
 
 
 function preload() {
     // img = loadImage("small_cow.png");
 
-        gif = createImg("/patternLive.gif");
-        // vid = createVideo('boidVid.mp4');
+    // gif = createImg("/patternLive.gif");
+    // vid = createVideo('boidVid.mp4');
 
-        
+
     // img.loadPixels();
+    // gif1 = loadImage("/patternLive.gif");
+    // gif2 = loadImage("/pattern.gif");
+    gif1 = createImg("/patternLive.gif");
+    // gif1.position(width, height);
+    gif1.hide()
+    gif2 = createImg("/pattern.gif");
+    // gif2.position(width/2, height/2);
+    gif2.hide()
 }
 
 
 function setup() {
 
-    
+
     createCanvas(window.innerWidth, window.innerHeight);
     angleMode(DEGREES);
 
@@ -66,21 +74,54 @@ function keyPressed() {
 
 function draw() {
     clear();
-    
 
-    
-    
+    textSize(25);
+    fill('white');
+    textAlign(LEFT)
+    text('Project: ', 40, 140 - 80);
+    text('Cellular Pattern Generator', 40, 140 + 35 - 80);
+
+
+    text('Project Time: ', 40, 140 - 80 + 900 + 50);
+    text('14 Days', 40, 140 + 35 - 80 + 900 + 50);
+
     // vid.hide();
     //     vid.play();
     //     image(vid,0,100,500,500);
-    
+
     // background(0);
 
     stroke(1);
     masterClock.setNeedleSpeed(second());
 
     translate(width / 2, height / 2);
+
+    /// UPDATE GIF EVENTS EHRE /// /// UPDATE GIF EVENTS EHRE /// /// UPDATE GIF EVENTS EHRE /// /// UPDATE GIF EVENTS EHRE ///
+
+    if(masterClock.currDay == 1){
+        gif1.hide();
+        gif2.hide();
+    }
+
+    else if(masterClock.currDay >= 10){
+        gif1.hide();
+        gif2.position(450, 30);
+        gif2.size(1000, 1000);
+        gif2.show();
+    }
     
+    else if(masterClock.currDay >= 5){
+        // image(gif1, 0, 0);
+        gif1.position(450, 30);
+        gif1.size(1000, 1000);
+        gif1.show();
+        // gif = createImg("/pattern.gif");
+        // gif.position(440, 0);
+        
+    }
+
+    /// UPDATE GIF EVENTS EHRE /// /// UPDATE GIF EVENTS EHRE /// /// UPDATE GIF EVENTS EHRE /// /// UPDATE GIF EVENTS EHRE ///
+
 
     blendMode(REMOVE);
     strokeWeight(5);
@@ -94,14 +135,14 @@ function draw() {
     noStroke();
     blendMode(BLEND);
 
-    
+
 
     masterClock.clockDraw();
 
 
     noStroke();
 
-    
+
     masterClock.clockShow(secClock.counter, minuteClock.counter); // temporary, would be clockSec.currSec and clockMin.currMin as parameters in future
     masterClock.clockHandUpdate();
 
@@ -119,8 +160,8 @@ function draw() {
     secClock.clockUpdate(secCount); // this seconds need to loop 60 times per minute.
 
     // console.log(masterClock.currSec);
-    console.log('min: ' + minCount);
-    console.log('sec: ' + secCount);
+    // console.log('min: ' + minCount);
+    // console.log('sec: ' + secCount);
 
 
     rotate(masterClock.angle);
@@ -130,13 +171,23 @@ function draw() {
     fill('red');
     ellipse(140, 70, 20);
 
-    // blendMode(MULTIPLY);
-    
-    
-    gif.position(440, 0);
-    gif.size(1000,'auto');
+
+    // if (masterClock.currDay >= 30) {
+    //     gif = createImg("/patternLive.gif");
+    //     gif.position(440, 0);
+    //     gif.size(1000, 'auto');
+    //     // gif.hide();
+    // }
+
+    // else if(masterClock.currDay >= 20){
+    //     gif = createImg("/boid.gif");
+    //     gif.position(440, 0);
+    //     gif.size(1000, 'auto');
+    // }
 
     
+
+
     // fill(255, 0, 0);
     // ellipse(0, 0, 400);
 
@@ -151,7 +202,7 @@ function draw() {
     //     gif.position(100, 0);
     //     gif.size(1200,'auto');
     // }
-    
+
 
 }
 

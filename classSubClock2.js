@@ -29,6 +29,8 @@ class SecClock {
         // noStroke();
         // let newCurrSec =  (0) + (360 - (0)) * (this.angle - 0) / (59 - 0); //re-map formula
         fill(255)
+        this.newCurrSec %= 360;
+        console.log(this.newCurrSec);
         if (this.newCurrSec != 0){
             arc(0, 0, this.w, this.h, -90, -90 + (this.newCurrSec));
         }
